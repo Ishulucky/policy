@@ -19,7 +19,7 @@ public class InsuranceController {
 	private InsuranceRepository insuRepository;
 
 	// To get into PolicyHomePage
-	@GetMapping("/link")
+	@GetMapping("/policyhome")
 	public String getAllLinks() {
 		return "Links";
 	}
