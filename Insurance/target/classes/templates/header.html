@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+</head>
+
+<body>
+	<input type="checkbox" id="check">
+	<header style="padding-top: 12px;">
+		<label for="check">
+			<i class="fas fa-bars" id="sidebar_btn"></i>
+		</label>
+		<div class="left_area">
+			<h3 id="headd">Health Insurance Management</h3>
+		</div>
+	</header>
+	<div class="sidebar" style="margin-top: 50px;"><br>
+		<center>
+			<img src="https://images.freeimages.com/fic/images/icons/2526/bloggers/256/admin.png" class="profile_image"
+				alt="">
+			<h4>Admin</h4>
+		</center>
+		<a th:href="@{/dash}"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
+		<a th:href="@{/getCustomers}"><i class="fas fa-users"></i><span>Customer</span></a>
+		<a th:href="@{/hospitals}"><i class="fas fa-list-alt"></i><span>Hospitals</span></a>
+		<a th:href="@{/list}"><i class="fab fa-product-hunt"></i><span>Policy</span></a>
+		<a th:href="@{/getCustomers}"><i class="fas fa-question-circle"></i><span>FAQ's</span></a>
+		<a th:href="@{/getPayments}"><i class="fas fa-question-circle"></i><span>Payment Section</span></a>
+		<a th:href="@{/signout}"><i class="fas fa-sign-out-alt"></i><span>Sign Out</span></a>
+	</div>
+
+	<script>
+		// JavaScript code for sidebar toggle
+		const check = document.getElementById('check');
+		const sidebar = document.querySelector('.sidebar');
+
+		check.addEventListener('change', () => {
+			if (check.checked) {
+				sidebar.style.left = '0';
+			} else {
+				sidebar.style.left = '-250px';
+			}
+		});
+	</script>
+	</div>
+	<script th:if="${noaccess}">
+		alert("[[${noaccess}]]");
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insurance Policy List</title>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<h2>Insurance Policy List</h2>
+			</div>
+		</div>
+		<div class="row table-container">
+			<div class="col-md-12">
+				<table class="table table-bordered" id="table">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Customer ID</th>
+							<th>Creation Date</th>
+							<th>Sum Assured</th>
+							<th>Applicable Date</th>
+							<th>Insurance Package ID</th>
+							<th>Yearly Premium Amount</th>
+							<th>Expiry Date</th>
+							<th>Agent ID</th>
+							<th>Status</th>
+							<th>Count</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody id="tableBody">
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		// Display Policies
+		function displayPolicies() {
+			$.ajax({
+				type: "GET",
+				url: "/policy", // Replace with your API endpoint
+				dataType: 'json',
+				success: function (data) {
+					var output = '';
+					for (var i = 0; i < data.length; i++) {
+						output += '<tr>';
+						output += '<td>' + data[i].id + '</td>';
+						output += '<td>' + data[i].customerId + '</td>';
+						output += '<td>' + data[i].creationDate + '</td>';
+						output += '<td>' + data[i].sumAssured + '</td>';
+						output += '<td>' + data[i].applicableDate + '</td>';
+						output += '<td>' + data[i].insurancePackageId + '</td>';
+						output += '<td>' + data[i].yearlyPremiumAmount + '</td>';
+						output += '<td>' + data[i].expiryDate + '</td>';
+						output += '<td>' + data[i].agentId + '</td>';
+						output += '<td>' + data[i].status + '</td>';
+						output += '<td>' + data[i].count + '</td>';
+						output += '<td><button type="button" class="btn btn-warning custom-button" onclick="editPolicy('
+							+ data[i].id
+							+ ', \'approved\')">approved</button>';
+						output += '<button type="button" class="btn btn-warning custom-button" onclick="editPolicy('
+							+ data[i].id
+							+ ', \'cancelled\')">cancelled</button></td>';
+						output += '</tr>';
+					}
+					$("#tableBody").html(output);
+				},
+				error: function (error) {
+					alert("Error retrieving policies: " + error.responseText);
+				}
+			});
+		}
+
+		function editPolicy(id, status) {
+			// Ask for confirmation before updating the status
+			if (confirm("Are you sure you want to update the status?")) {
+				var deptData = {
+					id: id,
+					status: status
+				};
+
+				$.ajax({
+					type: "PUT",
+					contentType: "application/json",
+					url: "/updatepolicy",
+					data: JSON.stringify(deptData),
+					dataType: 'json',
+					success: function () {
+						alert("Policy updated successfully");
+						displayPolicies(); // Refresh the policy list
+					},
+					error: function (error) {
+						alert("Error updating policy: " + error.responseText);
+						console.log("Error updating policy: " + error.responseText);
+					}
+				});
+			}
+		}
+
+		// Initial call to display policies
+		displayPolicies();
+	</script>
+</body>
+
+</html>

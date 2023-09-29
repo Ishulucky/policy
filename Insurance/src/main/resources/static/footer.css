@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+/* CSS for copyright footer */
+footer {
+	left: 0;
+	bottom: 0;
+	color: rgb(155, 155, 155);
+	text-align: center;
+	padding: 2px 0;
+	width: 100%;
+}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Add Insurance Policy</title>
+	<!-- jQuery library -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+	<h1>Add Insurance Policy</h1>
+	<form id="addPolicyForm">
+		<label for="id">id:</label>
+		<input type="text" id="id" name="id" required><br><br>
+
+		<label for="customerId">Customer ID:</label>
+		<input type="text" id="customerId" name="customerId" required><br><br>
+
+		<label for="creationDate">Policy Start Date:</label>
+		<input type="date" id="creationDate" name="creationDate" required><br><br>
+
+		<label for="sumAssured">Sum Assured:</label>
+		<input type="text" id="sumAssured" name="sumAssured" required><br><br>
+
+		<label for="applicableDate">Applicable Date:</label>
+		<input type="date" id="applicableDate" name="applicableDate" required><br><br>
+
+		<label for="insurancePackageId">Insurance Package ID:</label>
+		<input type="text" id="insurancePackageId" name="insurancePackageId" required><br><br>
+
+		<label for="yearlyPremiumAmount">Yearly Premium Amount:</label>
+		<input type="text" id="yearlyPremiumAmount" name="yearlyPremiumAmount" required><br><br>
+
+		<label for="expiryDate">Expiration Date:</label>
+		<input type="date" id="expiryDate" name="expiryDate" required><br><br>
+
+		<label for="agentId">Agent ID:</label>
+		<input type="text" id="agentId" name="agentId" required><br><br>
+
+		<label for="status">Status:</label>
+		<input type="text" id="status" name="status" required><br><br>
+
+		<label for="count">Count:</label>
+		<input type="text" id="count" name="count" required><br><br>
+
+		<button type="submit">Add Policy</button>
+	</form>
+
+	<script>
+		$(document).ready(function () {
+			// Handle form submission
+			$('#addPolicyForm').submit(function (event) {
+				event.preventDefault();
+
+				// Prepare the data to be sent to the server
+				var formData = {
+					id: $('#id').val(),
+					customerId: $('#customerId').val(),
+					creationDate: $('#creationDate').val(),
+					sumAssured: $('#sumAssured').val(),
+					applicableDate: $('#applicableDate').val(),
+					insurancePackageId: $('#insurancePackageId').val(),
+					yearlyPremiumAmount: $('#yearlyPremiumAmount').val(),
+					expiryDate: $('#expiryDate').val(),
+					agentId: $('#agentId').val(),
+					status: $('#status').val(),
+					count: $('#count').val()
+				};
+
+				// Send a POST request to the server to add a new policy
+				$.ajax({
+					type: 'POST',
+					url: '/createpolicy', // Replace with your server endpoint
+					contentType: 'application/json',
+					data: JSON.stringify(formData),
+					success: function (response) {
+						alert('Policy record inserted successfully!');
+						window.location.href = "getPolicy.html";
+					},
+					error: function (error) {
+						// Handle error, e.g., show an error message
+						console.log('Error inserting policy record: ' + error.responseText);
+					}
+				});
+			});
+		});
+	</script>
+</body>
+
+</html>
